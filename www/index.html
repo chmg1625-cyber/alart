@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>후회제로</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1f6;--card:#fff;--ink:#1d2433;--sub:#5d6678;--line:#d9dfea;--acc:#3b4bff;--accs:#e6e9ff;--good:#13875b;--bad:#d6393f;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151d;--card:#1b2030;--ink:#eef1f8;--sub:#9aa3b8;--line:#2e3550;--acc:#8b97ff;--accs:#262c52;--good:#3fc88f;--bad:#ff7378;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12151d;--card:#1b2030;--ink:#eef1f8;--sub:#9aa3b8;--line:#2e3550;--acc:#8b97ff;--accs:#262c52;--good:#3fc88f;--bad:#ff7378;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+main{max-width:480px;margin:0 auto;padding:22px 18px 110px}
+h1{font-size:30px;letter-spacing:-.04em;margin:0;font-weight:700}
+h2{font-size:17px;margin:28px 0 10px;font-weight:700;letter-spacing:-.02em}
+.sub{color:var(--sub);font-size:14px;margin:4px 0 0}
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:10px;border:1px solid var(--line)}
+.hero{padding:20px 18px;margin-top:18px}
+.pair{display:flex;align-items:baseline;gap:10px;font-size:15px;color:var(--sub)}
+.pair b{font-size:34px;color:var(--ink);letter-spacing:-.03em}
+.gap{font-size:15px;margin-top:8px}
+.neg{color:var(--bad)}.pos{color:var(--good)}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.name{font-weight:700;font-size:16px}
+.meta{font-size:13px;color:var(--sub)}
+.emo{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}
+.emo button{border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:8px 0 6px;font-size:26px;cursor:pointer;color:var(--ink);font-family:inherit;line-height:1.2}
+.emo button span{display:block;font-size:10px;color:var(--sub);margin-top:2px;letter-spacing:-.03em}
+.emo button.on{background:var(--accs);border-color:var(--acc)}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:12px}
+.opts button,.chip{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px;font-size:14px;cursor:pointer;color:var(--ink);font-family:inherit}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border-radius:999px;padding:7px 13px}
+.chip.on{background:var(--accs);border-color:var(--acc);font-weight:700}
+label{display:block;font-size:14px;font-weight:500;margin:18px 0 8px}
+input{width:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:13px;font-size:16px;font-family:inherit}
+input:focus,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.btn{width:100%;margin-top:24px;background:var(--acc);color:#fff;border:0;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+:root[data-theme="dark"] .btn{color:#12151d}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn{color:#12151d}}
+.ghost{background:none;border:0;color:var(--sub);font-size:13px;text-decoration:underline;cursor:pointer;font-family:inherit;padding:8px 0}
+.trk{position:relative;height:22px;margin:12px 6px 4px}
+.trk:before{content:"";position:absolute;left:0;right:0;top:10px;height:2px;background:var(--line)}
+.ln{position:absolute;top:8px;height:6px;border-radius:3px}
+.dot{position:absolute;top:3px;width:16px;height:16px;border-radius:50%;margin-left:-8px;border:2px solid var(--ink);background:var(--card)}
+.dot.g{background:var(--ink)}
+.scale{display:flex;justify-content:space-between;font-size:11px;color:var(--sub);margin:0 0 2px}
+.note{font-size:14px;margin:0 0 8px;padding-left:12px;border-left:3px solid var(--acc)}
+.legend{font-size:12px;color:var(--sub);margin-top:6px}
+.empty{text-align:center;padding:30px 10px;color:var(--sub)}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px)}
+nav div{display:flex;width:100%;max-width:480px}
+nav button{flex:1;background:none;border:0;padding:12px 0 10px;font-size:13px;color:var(--sub);cursor:pointer;font-family:inherit}
+nav button b{display:block;font-size:20px;font-weight:400}
+nav button.on{color:var(--acc);font-weight:700}
+#toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<nav><div>
+<button data-a="tab" data-v="home" id="t-home"><b>🏠</b>홈</button>
+<button data-a="tab" data-v="add" id="t-add"><b>✏️</b>기대 기록</button>
+<button data-a="tab" data-v="ana" id="t-ana"><b>📊</b>설렘 갭</button>
+</div></nav>
+<div id="toast" role="status"></div>
+<script>
+var KEY="regretzero.v1",DAY=864e5;
+var EM=["😖","😕","😐","🙂","😍"],GL=["많이 아쉬워","별로예요","그저 그래","괜찮아요","대만족"],EL=["기대 없음","조금","설레요","많이","두근두근"];
+var CATS=["패션","식비·배달","전자기기","생활용품","취미","구독"];
+var USE={daily:"매일 써요",some:"가끔 써요",none:"안 써요",ret:"반품했어요"};
+var S=load(),view="home",draft={name:"",price:"",cat:CATS[0],exp:4,eta:3};
+function load(){try{var r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return{items:[]}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function won(n){return"₩"+Math.round(n).toLocaleString("ko-KR")}
+function avg(a,f){return a.length?a.reduce(function(s,i){return s+f(i)},0)/a.length:0}
+function fx(n){return n.toFixed(1)}
+function sgn(n){return(n>0?"+":"")+n.toFixed(1)}
+function toast(m){var t=document.getElementById("toast");t.textContent=m;t.className="show";clearTimeout(toast.h);toast.h=setTimeout(function(){t.className=""},1800)}
+function emoRow(act,id,cur,labels){var h='<div class="emo">';for(var i=0;i<5;i++){h+='<button data-a="'+act+'" data-id="'+id+'" data-v="'+(i+1)+'" class="'+(cur===i+1?"on":"")+'" aria-label="'+labels[i]+'">'+EM[i]+'<span>'+labels[i]+'</span></button>'}return h+"</div>"}
+
+function home(){
+  var done=S.items.filter(function(i){return i.got}),wait=S.items.filter(function(i){return!i.got});
+  var due=done.filter(function(i){return!i.use&&Date.now()-i.gotT>=30*DAY});
+  var h='<h1>후회제로</h1><p class="sub">산 순간의 설렘과 받은 뒤의 마음, 그 차이를 기록해요.</p>';
+  if(done.length){
+    var e=avg(done,function(i){return i.exp}),g=avg(done,function(i){return i.got}),d=g-e;
+    h+='<div class="card hero"><div class="pair">기대 <b>'+fx(e)+'</b> → 만족 <b>'+fx(g)+'</b></div><div class="gap '+(d<-.2?"neg":"pos")+'">설렘 갭 '+sgn(d)+' · '+(d<-.2?"받은 뒤 마음이 조금 식는 편이에요":"기대만큼 만족하고 있어요")+'</div><p class="meta" style="margin:8px 0 0">완료한 소비 '+done.length+'건 기준</p></div>';
+  }else{
+    h+='<div class="card empty hero">아직 기록이 없어요.<br>결제한 순간의 기대를 먼저 남겨 보세요.<br><button class="ghost" data-a="seed">예시 데이터로 둘러보기</button></div>';
+  }
+  if(wait.length){
+    h+='<h2>물건이 도착했나요?</h2>';
+    wait.forEach(function(i){h+='<div class="card"><div class="row"><span class="name">'+esc(i.name)+'</span><span class="meta">'+won(i.price)+'</span></div><div class="meta">'+esc(i.cat)+' · 살 때 기대 '+EM[i.exp-1]+'</div>'+emoRow("got",i.id,0,GL)+'<button class="ghost" data-a="del" data-id="'+i.id+'">기록 삭제</button></div>'});
+  }
+  if(due.length){
+    h+='<h2>한 달 지났어요. 아직 쓰세요?</h2>';
+    due.forEach(function(i){h+='<div class="card"><div class="row"><span class="name">'+esc(i.name)+'</span><span class="meta">'+won(i.price)+'</span></div><div class="opts">'+Object.keys(USE).map(function(k){return'<button data-a="use" data-id="'+i.id+'" data-v="'+k+'">'+USE[k]+'</button>'}).join("")+'</div></div>'});
+  }
+  if(done.length||wait.length)h+='<p style="text-align:center;margin-top:24px"><button class="ghost" data-a="reset">모든 기록 지우기</button></p>';
+  return h;
+}
+
+function add(){
+  var h='<h1>기대 기록</h1><p class="sub">결제한 지금이 설렘이 가장 큰 순간이에요. 10초면 끝나요.</p>';
+  h+='<label for="nm">무엇을 샀나요?</label><input id="nm" data-f="name" value="'+esc(draft.name)+'" placeholder="예: 무선 이어폰" maxlength="40">';
+  h+='<label>종류</label><div class="chips">'+CATS.map(function(c){return'<button class="chip '+(draft.cat===c?"on":"")+'" data-a="cat" data-v="'+c+'">'+c+'</button>'}).join("")+'</div>';
+  h+='<label for="pr">가격 (원)</label><input id="pr" data-f="price" inputmode="numeric" value="'+esc(draft.price)+'" placeholder="39000">';
+  h+='<label>도착 예정</label><div class="chips">'+[[1,"내일"],[3,"3일 뒤"],[7,"일주일 뒤"]].map(function(c){return'<button class="chip '+(draft.eta===c[0]?"on":"")+'" data-a="eta" data-v="'+c[0]+'">'+c[1]+'</button>'}).join("")+'</div><p class="meta" style="margin:8px 0 0">그때 알림으로 물어볼게요.</p>';
+  h+='<label>얼마나 기대돼요?</label>'+emoRow("exp","",draft.exp,EL);
+  h+='<button class="btn" data-a="save">기대 저장하기</button>';
+  return h;
+}
+
+function ana(){
+  var done=S.items.filter(function(i){return i.got});
+  var h='<h1>설렘 갭</h1><p class="sub">살 때의 기대와 받은 뒤의 만족, 얼마나 차이 나는지 봐요.</p>';
+  if(done.length<2)return h+'<div class="card empty" style="margin-top:18px">수령 후 평가를 2건 이상 남기면 분석이 열려요.<br><button class="ghost" data-a="seed">예시 데이터로 둘러보기</button></div>';
+  var m={};done.forEach(function(i){(m[i.cat]=m[i.cat]||[]).push(i)});
+  var rows=Object.keys(m).map(function(c){var a=m[c],e=avg(a,function(i){return i.exp}),g=avg(a,function(i){return i.got});return{c:c,n:a.length,e:e,g:g,d:g-e}}).sort(function(a,b){return a.d-b.d});
+  var tot=avg(S.items.filter(function(i){return i.got}),function(i){return i.price})*0;
+  var all=done.reduce(function(s,i){return s+i.price},0);
+  var reg=done.filter(function(i){return i.got<=2||i.use==="none"||i.use==="ret"});
+  var rs=reg.reduce(function(s,i){return s+i.price},0);
+  h+='<div class="card hero"><div class="row"><span class="name">후회 추정 금액</span><b style="font-size:24px;letter-spacing:-.03em">'+won(rs)+'</b></div><p class="meta" style="margin:6px 0 0">만족 2점 이하, 안 쓰거나 반품한 소비 '+reg.length+'건 · 전체 지출의 '+(all?Math.round(rs/all*100):0)+'%</p></div>';
+  h+='<h2>종류별 설렘 갭</h2><div class="legend">○ 살 때 기대 &nbsp; ● 받은 뒤 만족</div>';
+  rows.forEach(function(r){
+    var pe=(r.e-1)/4*100,pg=(r.g-1)/4*100,l=Math.min(pe,pg),w=Math.abs(pe-pg);
+    h+='<div class="card"><div class="row"><span class="name">'+esc(r.c)+' <span class="meta">'+r.n+'건</span></span><b class="'+(r.d<-.2?"neg":"pos")+'">'+sgn(r.d)+'</b></div><div class="trk"><i class="ln" style="left:'+l+'%;width:'+w+'%;background:var('+(r.d<-.2?"--bad":"--good")+')"></i><b class="dot e" style="left:'+pe+'%"></b><b class="dot g" style="left:'+pg+'%"></b></div><div class="scale"><span>1</span><span>5</span></div></div>';
+  });
+  h+='<h2>나를 위한 한 줄</h2>';
+  var w=rows[0],b=rows[rows.length-1];
+  if(w.d<-.3)h+='<p class="note">‘'+esc(w.c)+'’는 기대보다 평균 '+fx(-w.d)+'점 낮았어요. 결제 전에 하루만 기다려 보세요.</p>';
+  if(b.d>=-.2&&b!==w)h+='<p class="note">‘'+esc(b.c)+'’는 기대만큼 만족해요. 이 영역에는 마음 편히 써도 좋아요.</p>';
+  var nr=done.filter(function(i){return i.use==="ret"||i.use==="none"}).length;
+  if(nr)h+='<p class="note">한 달 뒤 쓰지 않거나 반품한 물건이 '+nr+'건이에요. 기록하지 않아도 행동이 말해 주고 있어요.</p>';
+  return h;
+}
+
+function render(){
+  document.getElementById("app").innerHTML=view==="home"?home():view==="add"?add():ana();
+  ["home","add","ana"].forEach(function(v){document.getElementById("t-"+v).className=view===v?"on":""});
+}
+
+function seed(){
+  var n=Date.now(),L=[
+    ["무선 이어폰","전자기기",129000,5,4,"daily",50],["겨울 코트","패션",189000,5,3,"some",45],
+    ["배달 치킨","식비·배달",24000,4,3,null,0],["러닝화","패션",99000,4,2,"none",42],
+    ["주방 정리함","생활용품",35000,3,4,"daily",40],["보드게임","취미",52000,5,2,"none",38],
+    ["OTT 구독","구독",14500,3,2,"ret",36],["텀블러","생활용품",28000,4,4,"daily",34]];
+  S.items=L.map(function(r,i){var days=r[6];return{id:"s"+i,name:r[0],cat:r[1],price:r[2],exp:r[3],got:r[4],use:r[5],t:n-(days+3)*DAY,gotT:n-days*DAY}});
+  S.items.push({id:"s9",name:"캠핑 의자",cat:"취미",price:67000,exp:5,got:0,use:null,t:n-DAY,gotT:0});
+  save();render();toast("예시 데이터를 불러왔어요");
+}
+
+var LN=window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform()?window.Capacitor.Plugins.LocalNotifications:null;
+function plan(list){if(!LN)return;LN.requestPermissions().then(function(r){if(r.display!=="granted"){toast("알림이 꺼져 있어요. 설정에서 켜 주세요");return}return LN.schedule({notifications:list})}).catch(function(){})}
+function note(it,k,days,title,body){return{id:it.nid+k,title:title,body:body,schedule:{at:new Date(Date.now()+days*DAY),allowWhileIdle:true},extra:{id:it.id}}}
+function remind(it,eta){plan([note(it,1,eta,"📦 "+it.name+" 도착했나요?","받아본 느낌을 이모지 한 번으로 남겨 주세요."),note(it,2,eta+2,"아직 평가 전이에요","‘"+it.name+"’, 기대만큼이었나요?")])}
+function after(it){if(it.nid)plan([note(it,3,30,"🧐 "+it.name+", 아직 쓰세요?","한 달이 지났어요. 탭 한 번으로 답해 주세요.")])}
+function cancel(it,ks){if(LN&&it.nid)LN.cancel({notifications:ks.map(function(k){return{id:it.nid+k}})}).catch(function(){})}
+if(LN)LN.addListener("localNotificationActionPerformed",function(){view="home";render()});
+document.addEventListener("input",function(e){var f=e.target.dataset.f;if(f)draft[f]=e.target.value});
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-a]");if(!t)return;
+  var a=t.dataset.a,v=t.dataset.v,id=t.dataset.id;
+  var it=S.items.filter(function(i){return i.id===id})[0];
+  if(a==="tab"){view=v;render();window.scrollTo(0,0)}
+  else if(a==="cat"){draft.cat=v;render()}
+  else if(a==="exp"){draft.exp=+v;render()}
+  else if(a==="eta"){draft.eta=+v;render()}
+  else if(a==="save"){
+    var p=parseInt(String(draft.price).replace(/[^0-9]/g,""),10);
+    if(!draft.name.trim()){toast("상품명을 입력해 주세요");return}
+    if(!p){toast("가격을 숫자로 입력해 주세요");return}
+    var ni={id:"i"+Date.now(),nid:(Date.now()%1e6)*10,name:draft.name.trim(),cat:draft.cat,price:p,exp:draft.exp,got:0,use:null,t:Date.now(),gotT:0};S.items.unshift(ni);remind(ni,draft.eta);
+    save();draft={name:"",price:"",cat:draft.cat,exp:4,eta:3};view="home";render();toast("기대를 저장했어요");window.scrollTo(0,0)
+  }
+  else if(a==="got"&&it){it.got=+v;it.gotT=Date.now();save();render();toast("평가를 저장했어요");cancel(it,[1,2]);after(it)}
+  else if(a==="use"&&it){it.use=v;save();render();toast("저장했어요");cancel(it,[3])}
+  else if(a==="del"&&it){cancel(it,[1,2,3]);S.items=S.items.filter(function(i){return i.id!==id});save();render()}
+  else if(a==="seed")seed();
+  else if(a==="reset"){if(confirm("모든 기록을 지울까요?")){S={items:[]};save();render()}}
+});
+render();
+</script>
+</body>
+</html>
